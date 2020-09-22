@@ -1,27 +1,24 @@
-import React from 'react';
-import logoSvg from '../assets/img/pizza-logo.svg';
-import Button from './Button.jsx';
-import {Link} from 'react-router-dom';
+import React from "react";
+import logoSvg from "../assets/img/pizza-logo.svg";
+import Button from "./Button.jsx";
+import { Link } from "react-router-dom";
 
-
-
-function Header(){
-    return(
-        <div className="header">
-        <div className="container">
-          <Link>
+function Header() {
+  return (
+    <div className="header">
+      <div className="container">
+        <Link>
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
-             
               <h1>Pizza</h1>
-             
-              <p>самая вкусная пицца в мире</p>  
+
+              <p>самая вкусная пицца в мире</p>
             </div>
           </div>
-          </Link>
-          <div className="header__cart">
-            <Link to="/cart">
+        </Link>
+        <div className="header__cart">
+          <Link to="/cart">
             <Button className="button--cart">
               <span>520 ₽</span>
               <div className="button__delimiter"></div>
@@ -55,12 +52,12 @@ function Header(){
                 />
               </svg>
               <span>3</span>
-            </Button></Link>
-            
-          </div>
+            </Button>
+          </Link>
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
-export default Header
+export default Header;
