@@ -1,8 +1,19 @@
 import React from "react";
 import classNames from "classnames";
 import LoadingBlock from "./LoadingBlock";
+import Button from "../Button";
 
-function PizzaBlock({ name, imageUrl, price, types, sizes, isLoading }) {
+function PizzaBlock({
+  id,
+  name,
+  imageUrl,
+  price,
+  types,
+  sizes,
+  isLoading,
+  onClickAddPizza,
+  addedCount,
+}) {
   const availableTypes = ["тоноке", "традиционное"];
   const availableSizes = [26, 30, 40];
 
@@ -16,6 +27,18 @@ function PizzaBlock({ name, imageUrl, price, types, sizes, isLoading }) {
   };
   const onSelectSize = (index) => {
     setActiveSize(index);
+  };
+
+  const onAddPizza = () => {
+    const obj = {
+      id,
+      name,
+      imageUrl,
+      price,
+      size: availableSizes[activeSize],
+      type: availableTypes[activeType],
+    };
+    onClickAddPizza(obj);
   };
 
   return (
@@ -55,7 +78,10 @@ function PizzaBlock({ name, imageUrl, price, types, sizes, isLoading }) {
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">{price} ₽</div>
 
-        <div className="button button--outline button--add">
+        <Button
+          onClick={onAddPizza}
+          className="button button--outline button--add"
+        >
           <svg
             width="12"
             height="12"
@@ -69,8 +95,8 @@ function PizzaBlock({ name, imageUrl, price, types, sizes, isLoading }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          {addedCount && <i>{addedCount}</i>}
+        </Button>
       </div>
     </div>
   );

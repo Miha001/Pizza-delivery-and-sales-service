@@ -7,7 +7,7 @@ import { combineReducers } from "redux";
 const rootReducer = combineReducers({
   filters,
   pizzas,
-  // cart,
+  cart,
 });
 
 export default rootReducer;
