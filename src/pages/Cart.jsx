@@ -1,9 +1,13 @@
-import React from "react";
+import React,{useEffect} from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import cartEmptyImage from "../assets/img/empty-cart.png";
 import { CartItem, Button } from "../components";
+import ExtraOrder from "../components/ExtraOrder";
+import OrderMap from "../components/OrderMap";
+
 import {
   clearCart,
   removeCartItem,
@@ -11,9 +15,87 @@ import {
   minusCartItem,
 } from "../redux/actions/cart";
 
+
+
+let countOfBusyBakes=0;
+let time=15;
+let x=0,q=0;
+let extraTime=0;
+
+const clearBakes= async(q)=>{
+  setTimeout(()=>{countOfBusyBakes-=q;
+  console.log("Сработал таймер, количество занятых печей: "+countOfBusyBakes)},900000); 
+}
+const clearExtraTime= async(q)=>{
+  setTimeout(()=>{extraTime-=15;
+  console.log("Сработал таймер, доп время : "+countOfBusyBakes)},900000); 
+}
+
 function Cart() {
+
+  useEffect(
+    ()=>{
+      console.log("Сработал useEffect")
+      switch(totalCount)
+      {
+        case 1:
+          x=1;
+          q=1;
+          time= (totalCount*15)/(x*q);
+        break;
+        case 2:
+          x=2;
+          q=1;
+          time= (totalCount*15)/(x*q);
+        break;
+        case 3:
+          x=1.5;
+          q=2;
+          time= (totalCount*15)/(x*q);
+        break;
+        case 4:
+          x=2;
+          q=2;
+          time= (totalCount*15)/(x*q);
+        break;
+        case 5:
+          x=2;
+          q=3;
+          time= 15;
+        break;
+        case 6:
+          x=2;
+          q=3;
+          time= (totalCount*15)/(x*q);
+        break;
+        case 7:
+          x=2;
+          q=4;
+          time= 15;
+        break;
+        case 8:
+          x=2;
+          q=4;
+          time= (totalCount*15)/(x*q);
+        break;
+        default:
+        x=2;
+        q=4;
+       time =30;
+          break;
+  
+      }
+      time+=extraTime;
+
+       
+        console.log("time равен "+time)
+        console.log("extraTime равен "+extraTime)
+    }
+  );
+  
   const dispatch = useDispatch();
   const { totalPrice, totalCount, items } = useSelector(({ cart }) => cart);
+ 
 
   const addedPizzas = Object.keys(items).map((key) => {
     return items[key].items[0];
@@ -40,9 +122,26 @@ function Cart() {
   };
 
   const onClickOrder = () => {
-    console.log("ВАШ ЗАКАЗ", items);
+
+
+if(q==4){
+
+  extraTime+=15;
+}
+  countOfBusyBakes+=q;
+
+  clearBakes(q);
+
+  dispatch(clearCart());
+
+  
   };
 
+
+
+
+  
+  
   return (
     <div className="container container--cart">
       {totalCount ? (
@@ -147,6 +246,24 @@ function Cart() {
                 Сумма заказа: <b>{totalPrice} ₽</b>
               </span>
             </div>
+            <br/>
+            <label className="label" >Ваше имя</label>
+            <br/>
+            <input id="name" name="Name" type="text"></input>
+            <br/>
+            <br/>
+            <label className="label">Ваш телефон</label>
+            <br/>
+            <input   id="phoneNumber" name="PhoneNumber" type="text"></input>
+            <br/>
+            <br/>
+
+            <br/>
+       
+               <OrderMap/>
+            
+           
+              <ExtraOrder/>
             <div className="cart__bottom-buttons">
               <a
                 href="/"
@@ -167,13 +284,23 @@ function Cart() {
                     strokeLinejoin="round"
                   />
                 </svg>
+
                 <Link to="/">
                   <span>Вернуться назад</span>
                 </Link>
               </a>
-              <Button onClick={onClickOrder} className="pay-btn">
-                <span>Оплатить сейчас</span>
-              </Button>
+              <Link to=
+              {{
+                pathname:"/finish",
+                propsTime:50+time
+              }}
+              >
+                <Button 
+                 onClick={onClickOrder}
+                  className="pay-btn">
+                  <span>Оплатить сейчас</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

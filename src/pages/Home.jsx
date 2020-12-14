@@ -6,7 +6,7 @@ import PizzaLoadingBlock from "../components/PizzaBlock/LoadingBlock";
 import { setCategory, setSortBy } from "../redux/actions/filters";
 
 import { fetchPizzas } from "../redux/actions/pizzas";
-import { addPizzaToCart } from "../redux/actions/cart";
+// import { addPizzaToCart } from "../redux/actions/cart";
 const categoryNames = [
   "Мясные",
   "Вегетарианская",

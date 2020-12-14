@@ -14,11 +14,11 @@ function PizzaBlock({
   onClickAddPizza,
   addedCount,
 }) {
-  const availableTypes = ["тоноке", "традиционное"];
+  const availableTypes = ["тонкое", "традиционное"];
   const availableSizes = [26, 30, 40];
 
   const [activeType, setActiveType] = React.useState(types[0]);
-  const [activeSize, setActiveSize] = React.useState(sizes[0]);
+  const [activeSize, setActiveSize] = React.useState(0);
   if (isLoading) {
     return <LoadingBlock />;
   }
@@ -40,6 +40,7 @@ function PizzaBlock({
     };
     onClickAddPizza(obj);
   };
+
 
   return (
     <div className="pizza-block">

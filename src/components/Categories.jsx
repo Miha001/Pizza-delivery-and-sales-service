@@ -5,17 +5,12 @@ const Categories = React.memo(function Categories({
   items,
   onClickCategory,
 }) {
-  // const [activeItem, setActiveItem] = React.useState(null);
-
-  // const onSelectItem = (index) => {
-  //   onClickItem(index);
-  // };
   return (
     <div className="categories">
       <ul>
         <li
           className={activeCategory === null ? "active" : ""}
-          onClickItem={() => onClickCategory(null)}
+          onClick={() => onClickCategory(null)}
         >
           Все
         </li>
